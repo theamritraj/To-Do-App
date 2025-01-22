@@ -2,8 +2,6 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import TodoService from '../TodoService';
 import TodoTypes from '../todo';
 
-
-
 import "../css/TodoForm.css";
 import "../css/TodoList.css";
 
@@ -14,7 +12,8 @@ interface PropTypes {
 const TodoForm: React.FC<PropTypes> = ({ setTodos }) => {
   const [newTodoText, setNewTodoText] = useState<string>('');
 
-  const handleAddTodo = () => {
+  const handleAddTodo = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent the default form submission behavior
     if (newTodoText.trim() !== '') {
       const newTodo = TodoService.addTodos(newTodoText);
       setTodos((prevTodos) => [...prevTodos, newTodo]);
@@ -23,7 +22,7 @@ const TodoForm: React.FC<PropTypes> = ({ setTodos }) => {
   };
 
   return (
-    <div className="inputForm">
+    <form className="inputForm" onSubmit={handleAddTodo}>
       <input
         type="text"
         value={newTodoText}
@@ -31,8 +30,8 @@ const TodoForm: React.FC<PropTypes> = ({ setTodos }) => {
         autoFocus={true}
         placeholder="Add a Task"
       />
-      <button onClick={handleAddTodo}>Add Todo</button>
-    </div>
+      <button type="submit">Add Todo</button>
+    </form>
   );
 };
 
