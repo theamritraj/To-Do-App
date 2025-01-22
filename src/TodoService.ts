@@ -13,7 +13,7 @@ const TodoService = {
   addTodos: (text: string): TodoTypes => {
     const todos = TodoService.getTodos();
     const newTodo: TodoTypes = {
-      id: todos.length > 0 ? todos[todos.length - 1].id + 1 : 1, // Ensure unique IDs
+      id: todos.length > 0 ? todos[todos.length - 1].id + 1 : 1, 
       text,
       completed: false,
     };
@@ -35,6 +35,13 @@ const TodoService = {
   deleteTodo: (id: number): void => {
     const todos = TodoService.getTodos();
     const updatedTodos = todos.filter((todo) => todo.id !== id);
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedTodos));
+  },
+
+  // Mark All as Completed
+  markAllAsCompleted: (): void => {
+    const todos = TodoService.getTodos();
+    const updatedTodos = todos.map((todo) => ({ ...todo, completed: true }));
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(updatedTodos));
   },
 };

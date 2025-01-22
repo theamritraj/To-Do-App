@@ -41,6 +41,20 @@ const TodoList = () => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
 
+  // Function to toggle completed status
+  const handleToggleComplete = (id: number) => {
+    const todoToToggle = todos.find((todo) => todo.id === id);
+    if (todoToToggle) {
+      const updatedTodo = TodoService.updateTodo({
+        ...todoToToggle,
+        completed: !todoToToggle.completed,
+      });
+      setTodos((prevTodos) =>
+        prevTodos.map((todo) => (todo.id === id ? updatedTodo : todo))
+      );
+    }
+  };
+
   return (
     <div className="todoContainer">
       <div>
@@ -48,7 +62,7 @@ const TodoList = () => {
       </div>
 
       {todos.map((todo) => (
-        <div className="items" key={todo.id}>
+        <div className={`items ${todo.completed ? 'completed' : ''}`} key={todo.id}>
           {editingTodoId === todo.id ? (
             <div className="editedText">
               <input
@@ -68,7 +82,12 @@ const TodoList = () => {
             </div>
           ) : (
             <div className="editBtn">
-              <span>{todo.text}</span>
+              <span
+                style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}
+                onClick={() => handleToggleComplete(todo.id)}
+              >
+                {todo.text}
+              </span>
               <button
                 onClick={() => {
                   setEditingTodoId(todo.id);

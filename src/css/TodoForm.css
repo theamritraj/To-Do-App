@@ -21,8 +21,8 @@
 .inputForm > input{
   height: 5vh;
   width: 80%;
-  max-width: 900px; /* Set the maximum width */
-  margin: 0 auto; /* Center the container */
+  max-width: 900px; 
+  margin: 0 auto; 
   box-shadow: 1px 1px 6px -2px #000;
   background: #F3F8FF;
   font-family: 'Poppins', sans-serif;
